@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Threading;
+using newsfeed.Configuration;
 using newsfeed.RssFeed;
 
 namespace newsfeed.Listener
@@ -19,14 +20,16 @@ namespace newsfeed.Listener
         /// <summary>
         /// Initializes a new instance of the <see cref="NewsfeedListener"/> class.
         /// </summary>
-        /// <param name="uriPrefix">The URI prefix.</param>
-        /// <param name="baseFolder">or the base folder for files (not used just now).</param>
-        public NewsfeedListener(string uriPrefix, string baseFolder)
+        /// <param name="proxyConfig"></param>
+        /// <see cref="IProxyConfig"/>
+        public NewsfeedListener(IProxyConfig proxyConfig)
         {
             ThreadPool.SetMaxThreads(50, 1000);
             ThreadPool.SetMinThreads(50, 50);
             _uriListener = new HttpListener();
-            _uriListener.Prefixes.Add(uriPrefix);
+
+            string uriPortCombined = proxyConfig.Uri + proxyConfig.PortNumber;
+            _uriListener.Prefixes.Add(uriPortCombined);
         }
 
         /// <summary>

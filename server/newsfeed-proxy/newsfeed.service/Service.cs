@@ -7,6 +7,7 @@ namespace newsfeed.service
 {
     public partial class Service : ServiceBase
     {
+        private NewsfeedListener _newsFeedListener;
         public Service()
         {
             InitializeComponent();
@@ -16,7 +17,8 @@ namespace newsfeed.service
         {
             try
             {
-                new NewsfeedListener(NewsfeedConfig.Uri, NewsfeedConfig.PortNumber);
+                _newsFeedListener = new NewsfeedListener(new NewsfeedConfig().ProxyConfig);
+                _newsFeedListener.Start();
 
             }
             catch (Exception)
@@ -28,6 +30,7 @@ namespace newsfeed.service
 
         protected override void OnStop()
         {
+            _newsFeedListener.Stop();
         }
     }
 }

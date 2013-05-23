@@ -4,19 +4,48 @@ namespace newsfeed.Configuration
 {
     public class NewsfeedConfig
     {
-        public static string Uri
+        public NewsfeedConfig()
         {
+            Uri = WebConfigurationManager.AppSettings["Uri"];
+            PortNumber = WebConfigurationManager.AppSettings["PortNumber"];
+        }
+
+        public NewsfeedConfig(string uri, string port)
+        {
+            Uri = uri;
+            PortNumber = port;
+        }
+
+        /// <summary>
+        /// Gets the proxy config.
+        /// </summary>
+        /// <value>The proxy config.</value>
+        public IProxyConfig ProxyConfig {
             get
             {
-                return WebConfigurationManager.AppSettings["Uri"]; // typlically port 8080 on IIS
+                return new ProxyConfig(Uri, PortNumber);
             }
         }
-        public static string PortNumber
+
+        /// <summary>
+        /// Gets or sets the URI.
+        /// </summary>
+        /// <value>The URI.</value>
+        public string Uri
+        { 
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets or sets the port number.
+        /// Typically port 8080 on IIS
+        /// </summary>
+        /// <value>The port number.</value>
+        public string PortNumber
         {
-            get
-            {
-                return WebConfigurationManager.AppSettings["PortNumber"]; // typlically port 8080 on IIS
-            }
+            get;
+            private set;
         }
     }
 }
