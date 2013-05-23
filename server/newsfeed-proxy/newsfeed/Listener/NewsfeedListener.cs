@@ -69,9 +69,10 @@ namespace newsfeed.Listener
                 var uri = context.Request.QueryString[QueryStringConst];
 
                 byte[] rssFeed = new RssWebClient().Request(uri);
-                MemoryStream rssFeedMemory = new MemoryStream(rssFeed);
-                rssFeedMemory.WriteTo(context.Response.OutputStream);
-
+                using (MemoryStream rssFeedMemory = new MemoryStream(rssFeed))
+                {
+                    rssFeedMemory.WriteTo(context.Response.OutputStream);
+                }
                 // b4 framework 4.0
 //                StreamHelper.CopyStream(rssFeedMemory, context.Response.OutputStream);
              
