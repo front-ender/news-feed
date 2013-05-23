@@ -1,31 +1,32 @@
 using System;
 using System.IO;
 using System.Net;
-using System.Text;
 using System.Threading;
+using newsfeed.RssFeed;
 
-namespace newsfeed_proxy.Listener
+namespace newsfeed.Listener
 {
     /// <summary>
-    /// 
+    /// Listener class
+    /// TODO: Considered making this IDisposable
     /// </summary>
-    class NewsfeedListener
+    public class NewsfeedListener :IDisposable
     {
         readonly HttpListener _uriListener;
-        readonly string _baseFolder;
+
+        const string QueryStringConst = "uri";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NewsfeedListener"/> class.
         /// </summary>
         /// <param name="uriPrefix">The URI prefix.</param>
-        /// <param name="baseFolder">The base folder.</param>
+        /// <param name="baseFolder">or the base folder for files (not used just now).</param>
         public NewsfeedListener(string uriPrefix, string baseFolder)
         {
             ThreadPool.SetMaxThreads(50, 1000);
             ThreadPool.SetMinThreads(50, 50);
             _uriListener = new HttpListener();
             _uriListener.Prefixes.Add(uriPrefix);
-            _baseFolder = baseFolder;
         }
 
         /// <summary>
@@ -56,42 +57,28 @@ namespace newsfeed_proxy.Listener
         /// Processes the request.
         /// </summary>
         /// <param name="listenerContext">The listener context.</param>
-        void ProcessRequest(object listenerContext)
+        static void ProcessRequest(object listenerContext)
         {
             try
             {
                 var context = (HttpListenerContext)listenerContext;
-                string filename = Path.GetFileName(context.Request.RawUrl);
-                string path = Path.Combine(_baseFolder, filename);
-                byte[] msg;
-                if (!File.Exists(path))
-                {
-                    context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-                    msg = Encoding.UTF8.GetBytes("Sorry, that page does not exist");
-                }
-                else
-                {
-                    context.Response.StatusCode = (int)HttpStatusCode.OK;
-                    msg = File.ReadAllBytes(path);
-                    // TODO: Stream reader for RSS
-                    //using (Stream stream = webClient.OpenRead(url))
-                    //{
-                    //    using (StreamReader streamReader = new StreamReader(stream))
-                    //    {
-                    //        return streamReader.ReadToEnd();
-                    //    }
-                    //}
 
-                }
-                context.Response.ContentLength64 = msg.Length;
-                using (StreamWriter s = new StreamWriter(context.Response.OutputStream))
-                {
-                    // TODO: Stream write for embedding resource
-                    s.WriteLine("<P>Hello, {0}</P>", "URI OR SOMETHING");
-//                    s.Write(msg, 0, msg.Length);
-                }
+                var uri = context.Request.QueryString[QueryStringConst];
+
+                byte[] rssFeed = new RssWebClient().Request(uri);
+                MemoryStream rssFeedMemory = new MemoryStream(rssFeed);
+                rssFeedMemory.WriteTo(context.Response.OutputStream);
+
+                // b4 framework 4.0
+//                StreamHelper.CopyStream(rssFeedMemory, context.Response.OutputStream);
+             
             }
             catch (Exception ex) { Console.WriteLine("Request error: " + ex); }
+        }
+
+        public void Dispose()
+        {
+               // Dispose of any memory streams and local resources here..
         }
     }
 }

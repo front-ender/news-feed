@@ -1,21 +1,21 @@
-using NUnit.Framework;
 using newsfeed.Listener;
+using NUnit.Framework;
 
-namespace newsfeed.test.Listener
+namespace newsfeed.test.RssFeedTest
 {
     /// <summary>
     /// 
     /// </summary>
     [TestFixture]
-    public class NewsfeedListenerTest
+    public class RssWebClientTest
     {
         private const string UriCetrea = "http://cetrea.dk/";
 
-        private  NewsfeedListener _newsfeedListener = new NewsfeedListener(UriCetrea, string.Empty);
+        private NewsfeedListener _newsfeedListener = new NewsfeedListener(UriCetrea, string.Empty);
         [SetUp]
         public void Setup()
         {
-            
+            string test = "123";
         }
 
 
@@ -24,6 +24,6 @@ namespace newsfeed.test.Listener
         {
             // Do test here..
 
-        }        
+        }           
     }
 }

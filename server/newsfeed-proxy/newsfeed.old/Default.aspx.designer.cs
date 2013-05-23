@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace newsfeed_proxy {
+namespace newsfeed {
     
     
     public partial class Default {
