@@ -54,6 +54,7 @@
     <Compile Include="Configuration\NewsfeedConfigTest.cs" />
     <Compile Include="Default.Test.cs" />
     <Compile Include="Listener\HttpContextRhinoMocker.cs" />
+    <Compile Include="Listener\IntegrationWebClientTest.cs" />
     <Compile Include="Listener\NewsfeedListenerTest.cs" />
     <Compile Include="Listener\TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

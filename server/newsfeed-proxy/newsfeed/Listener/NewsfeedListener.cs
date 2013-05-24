@@ -30,16 +30,7 @@ namespace newsfeed.Listener
             ThreadPool.SetMaxThreads(50, 1000); // TODO: Put in config section
             ThreadPool.SetMinThreads(50, 50);   // TODO: Put in config section
             _uriListener = new HttpListener();
-
-            //"http://www.contoso.com:8080/customerData/"
-            string listenerUri = string.IsNullOrEmpty(proxyConfig.Uri) ? "http://*/" : proxyConfig.Uri;
-            Uri uri = new Uri(listenerUri);
-
-            int portNumber;
-            int.TryParse(proxyConfig.PortNumber, NumberStyles.Integer, CultureInfo.InvariantCulture, out portNumber);
-
-            string uriPortCombined = portNumber!=0 ? UriHelper.UriExtensions.SetPort(uri, portNumber).AbsoluteUri : listenerUri;
-            _uriListener.Prefixes.Add(uriPortCombined);
+            _uriListener.Prefixes.Add(UriHelper.CalculateCombinedPath(proxyConfig));
         }
 
         /// <summary>

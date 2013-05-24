@@ -1,15 +1,39 @@
 using System;
+using System.Globalization;
+using newsfeed.Configuration;
 
 namespace newsfeed.Helper
 {
     public class UriHelper
     {
-        public static class UriExtensions
+
+        private static Uri SetPort(Uri uri, int newPort)
         {
-            public static Uri SetPort(Uri uri, int newPort)
+            return new UriBuilder(uri) { Port = newPort }.Uri;
+        }
+
+        public static string CalculateCombinedPath(IProxyConfig proxyConfig)
+        {
+            int portNumber;
+            int.TryParse(proxyConfig.PortNumber, NumberStyles.Integer, CultureInfo.InvariantCulture, out portNumber);
+
+            string uriPortCombined;
+            //"http://www.contoso.com:8080/customerData/"
+            if (!string.IsNullOrEmpty(proxyConfig.Uri))
             {
-                return new UriBuilder(uri) {Port = newPort}.Uri;
+                Uri uri = new Uri(proxyConfig.Uri);
+                uriPortCombined = portNumber != 0 ? SetPort(uri, portNumber).AbsoluteUri : proxyConfig.Uri;
             }
-        }        
+            else if (!string.IsNullOrEmpty(proxyConfig.PortNumber))
+            {
+                uriPortCombined = string.Format("http://*:{0}/", proxyConfig.PortNumber);
+            }
+            else
+            {
+                uriPortCombined = "http://*/";
+            }
+            uriPortCombined = "http://+:8080/"; // Do all for now.   
+            return uriPortCombined;
+        }
     }
 }
