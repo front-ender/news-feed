@@ -1,5 +1,4 @@
 using System;
-using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -18,7 +17,8 @@ namespace newsfeed.Listener
         // ref. http://msdn.microsoft.com/en-us/library/system.net.httplistener.aspx
         readonly HttpListener _uriListener;
 
-        const string QueryStringConst = "uri";
+        const string UriQueryStringConst = "uri";
+        public const string SecretUriHelloKeyConst = "hello";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NewsfeedListener"/> class.
@@ -30,7 +30,10 @@ namespace newsfeed.Listener
             ThreadPool.SetMaxThreads(50, 1000); // TODO: Put in config section
             ThreadPool.SetMinThreads(50, 50);   // TODO: Put in config section
             _uriListener = new HttpListener();
-            _uriListener.Prefixes.Add(UriHelper.CalculateCombinedPath(proxyConfig));
+            string prefix = UriHelper.CalculateCombinedPath(proxyConfig);
+            _uriListener.Prefixes.Add("http://+:80/");
+            _uriListener.Prefixes.Add("http://*:8080/");
+            _uriListener.Prefixes.Add(prefix);
         }
 
         /// <summary>
@@ -42,8 +45,16 @@ namespace newsfeed.Listener
             {
                 throw new NotSupportedException("Windows XP SP2 or Server 2003 is required to use the HttpListener class.");
             }
-
-            _uriListener.Start();
+            try
+            {
+                _uriListener.Start();
+            }
+            catch (HttpListenerException exception)
+            {
+                // TODO Log that a process listening has already started here!!
+                // TODO Log that a process listening has already started here!!
+                throw;
+            }
 
             while (true)
                 try
@@ -63,6 +74,9 @@ namespace newsfeed.Listener
             _uriListener.Stop();
         }
 
+        public static string HelloWorldString = "<HTML><BODY> Hello world!</BODY></HTML>";
+        
+
         /// <summary>
         /// Processes the request.
         /// </summary>
@@ -73,14 +87,16 @@ namespace newsfeed.Listener
             {
                 var context = (HttpListenerContext)listenerContext;
 
-                var uri = context.Request.QueryString[QueryStringConst];
+                string uri = context.Request.QueryString[UriQueryStringConst];
 
-                byte[] rssFeed = new RssWebClient().Request(uri);
+                byte[] rssFeed = uri == SecretUriHelloKeyConst ? System.Text.Encoding.UTF8.GetBytes(HelloWorldString) : new RssWebClient().Request(uri);
+
                 using (MemoryStream rssFeedMemory = new MemoryStream(rssFeed))
                 {
                     rssFeedMemory.WriteTo(context.Response.OutputStream);
                 }
-                // b4 framework 4.0
+                context.Response.OutputStream.Close();
+                // b4 framework 3.5
 //                StreamHelper.CopyStream(rssFeedMemory, context.Response.OutputStream);
              
             }

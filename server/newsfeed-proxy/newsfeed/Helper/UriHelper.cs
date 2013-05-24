@@ -32,7 +32,6 @@ namespace newsfeed.Helper
             {
                 uriPortCombined = "http://*/";
             }
-            uriPortCombined = "http://+:8080/"; // Do all for now.   
             return uriPortCombined;
         }
     }
