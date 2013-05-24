@@ -97,8 +97,8 @@ namespace newsfeed.Listener
                 byte[] rssFeed = uri == SecretUriHelloKeyConst ? System.Text.Encoding.UTF8.GetBytes(HelloWorldString) 
                     : new RssWebClient().Request(uri);
 
-                context.Response.ContentType = "application/vnd.ms-excel";
-                context.Response.StatusCode = 200;
+//                context.Response.ContentType = "text/plain";
+//               context.Response.ContentType = "application/vnd.ms-excel";
                 using (MemoryStream rssFeedMemory = new MemoryStream(rssFeed))
                 {
                     rssFeedMemory.WriteTo(context.Response.OutputStream);
