@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using newsfeedFormEntry;
+using TestHarness.newsfeed;
 
 namespace newsfeed.TestHarness
 {
@@ -14,7 +14,7 @@ namespace newsfeed.TestHarness
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new NewsFeedTestForm());
 
           //  new newsfeed.NewsfeedListener("", "");
         }

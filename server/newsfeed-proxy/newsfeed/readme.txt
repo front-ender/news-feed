@@ -5,8 +5,11 @@ Der ønskes en simpel HTTP server skrevet i C#, med følgende funktionalitet:
 
 
 1. Skal være baseret på System.Net.HttpListener
+Done
 2. Skal kunne håndtere multiple samtidige requests
+Done
 3. Konfigurabel port via app.config
+Done
 4. /index.htm skal levere en side som beskrevet nedenfor
 5. Indholdet af index.htm skal ligge som en embedded resource
 6. /proxy?uri=<uri> skal lave et request til <uri> og returnere indholdet

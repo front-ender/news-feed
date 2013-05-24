@@ -43,6 +43,7 @@
     <Compile Include="Configuration\IProxyConfig.cs" />
     <Compile Include="Configuration\NewsfeedConfig.cs" />
     <Compile Include="Configuration\ProxyConfig.cs" />
+    <Compile Include="Helper\UriHelper.cs" />
     <Compile Include="Listener\NewsfeedListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RssFeed\RssWebClient.cs" />

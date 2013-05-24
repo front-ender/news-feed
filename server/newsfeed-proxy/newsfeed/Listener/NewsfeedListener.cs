@@ -1,8 +1,10 @@
 using System;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Threading;
 using newsfeed.Configuration;
+using newsfeed.Helper;
 using newsfeed.RssFeed;
 
 namespace newsfeed.Listener
@@ -13,6 +15,7 @@ namespace newsfeed.Listener
     /// </summary>
     public class NewsfeedListener :IDisposable
     {
+        // ref. http://msdn.microsoft.com/en-us/library/system.net.httplistener.aspx
         readonly HttpListener _uriListener;
 
         const string QueryStringConst = "uri";
@@ -24,11 +27,18 @@ namespace newsfeed.Listener
         /// <see cref="IProxyConfig"/>
         public NewsfeedListener(IProxyConfig proxyConfig)
         {
-            ThreadPool.SetMaxThreads(50, 1000);
-            ThreadPool.SetMinThreads(50, 50);
+            ThreadPool.SetMaxThreads(50, 1000); // TODO: Put in config section
+            ThreadPool.SetMinThreads(50, 50);   // TODO: Put in config section
             _uriListener = new HttpListener();
 
-            string uriPortCombined = proxyConfig.Uri + proxyConfig.PortNumber;
+            //"http://www.contoso.com:8080/customerData/"
+            string listenerUri = string.IsNullOrEmpty(proxyConfig.Uri) ? "http://*/" : proxyConfig.Uri;
+            Uri uri = new Uri(listenerUri);
+
+            int portNumber;
+            int.TryParse(proxyConfig.PortNumber, NumberStyles.Integer, CultureInfo.InvariantCulture, out portNumber);
+
+            string uriPortCombined = portNumber!=0 ? UriHelper.UriExtensions.SetPort(uri, portNumber).AbsoluteUri : listenerUri;
             _uriListener.Prefixes.Add(uriPortCombined);
         }
 
@@ -37,7 +47,13 @@ namespace newsfeed.Listener
         /// </summary>
         public void Start()
         {
+            if (!HttpListener.IsSupported)
+            {
+                throw new NotSupportedException("Windows XP SP2 or Server 2003 is required to use the HttpListener class.");
+            }
+
             _uriListener.Start();
+
             while (true)
                 try
                 {
@@ -77,12 +93,16 @@ namespace newsfeed.Listener
 //                StreamHelper.CopyStream(rssFeedMemory, context.Response.OutputStream);
              
             }
-            catch (Exception ex) { Console.WriteLine("Request error: " + ex); }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Request error: " + ex);
+            }
         }
 
         public void Dispose()
         {
                // Dispose of any memory streams and local resources here..
+                ((IDisposable)_uriListener).Dispose();
         }
     }
 }

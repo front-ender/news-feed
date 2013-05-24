@@ -1,3 +1,5 @@
+using System.IO;
+using System.Net;
 using newsfeed.Configuration;
 using NUnit.Framework;
 using newsfeed.Listener;
@@ -11,7 +13,7 @@ namespace newsfeed.test.Listener
     public class NewsfeedListenerTest : HttpContextRhinoMocker
     {
         private readonly HttpContextRhinoMocker _mocker = new HttpContextRhinoMocker();
-        private const string UriCetrea = "http://cetrea.dk/";
+        private const string UriCetrea = "http://cetrea.dk/proxy/";
         private const string PortNumberCetrea = "8080";
         private IProxyConfig _proxyConfig;
         private NewsfeedListener _newsfeedListener;
@@ -27,9 +29,22 @@ namespace newsfeed.test.Listener
 
 
         [Test]
-        public void TestExampleOne()
+        public void MakeARequest()
         {
             // Do test here..
+            string test;
+            WebClient webClient = new WebClient();
+//            string userName = Configuration.Value("FeedUsername");
+//            string userPassword = Configuration.Value("FeedPassword");
+//            webClient.Credentials = new NetworkCredential(userName, userPassword);
+            using (Stream stream = webClient.OpenRead("localhost"))
+            {
+                using (StreamReader streamReader = new StreamReader(stream))
+                {
+                    test = streamReader.ReadToEnd();
+                }
+            }
+            Assert.IsNotEmpty(test);
 
         }
 

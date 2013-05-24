@@ -12,7 +12,7 @@ namespace newsfeed.RssFeed
         /// </summary>
         /// <param name="uri">The URI.</param>
         /// <returns></returns>
-        public byte [] Request(string uri)
+        public byte[] Request(string uri)
         {
             try
             {
@@ -28,12 +28,22 @@ namespace newsfeed.RssFeed
                     {
                         return Encoding.UTF8.GetBytes(streamReader.ReadToEnd());
                     }
-                }            
+                }
 
             }
-            catch (Exception)
+            catch (WebException ex)
             {
-                return Encoding.UTF8.GetBytes("Sorry, that page does not exist");
+                if (ex.Response is HttpWebResponse)
+                {
+                    switch (((HttpWebResponse)ex.Response).StatusCode)
+                    {
+                        case HttpStatusCode.NotFound:
+                            return Encoding.UTF8.GetBytes("Sorry, that page does not exist");
+                        default:
+                            return Encoding.UTF8.GetBytes(ex.Message);
+                    }
+                }
+                return Encoding.UTF8.GetBytes(ex.Message);
             }
 
         }
