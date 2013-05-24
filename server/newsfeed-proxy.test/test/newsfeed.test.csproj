@@ -57,7 +57,7 @@
     <Compile Include="Listener\NewsfeedListenerTest.cs" />
     <Compile Include="Listener\TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RssFeedTest\RssWebClientTest.cs" />
+    <Compile Include="RssFeed\RssWebClientTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Lib\nunit.framework.dll" />

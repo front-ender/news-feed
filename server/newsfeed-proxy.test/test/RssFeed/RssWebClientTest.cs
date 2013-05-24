@@ -2,7 +2,7 @@ using System.IO;
 using newsfeed.RssFeed;
 using NUnit.Framework;
 
-namespace newsfeed.test.RssFeedTest
+namespace newsfeed.test.RssFeed
 {
     /// <summary>
     /// Testing of RssWebClient that gets the feed
@@ -18,7 +18,7 @@ namespace newsfeed.test.RssFeedTest
             string test = "123";
         }
 
-        private string Top10Apps = "https://itunes.apple.com/us/rss/topfreeapplications/limit=10/xml?partnerId=2003&tduid=6b2289862430bb7d4d58efd58bd7dd6e";
+        private const string Top10Apps = "https://itunes.apple.com/us/rss/topfreeapplications/limit=10/xml?partnerId=2003&tduid=6b2289862430bb7d4d58efd58bd7dd6e";
 
         [Test]
         public void ReadTop10AppsFeedFromApple()
