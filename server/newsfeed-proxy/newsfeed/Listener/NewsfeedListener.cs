@@ -11,6 +11,9 @@ namespace newsfeed.Listener
     /// <summary>
     /// Listener class
     /// TODO: Considered making this IDisposable
+    /// Usage : http://localhost:8080/?uri=hello or
+    /// http://localhost:8080/?uri=hello or
+    /// http://localhost:8080/?uri=http://bbc.co.uk/news
     /// </summary>
     public class NewsfeedListener :IDisposable
     {
@@ -31,8 +34,10 @@ namespace newsfeed.Listener
             ThreadPool.SetMinThreads(50, 50);   // TODO: Put in config section
             _uriListener = new HttpListener();
             string prefix = UriHelper.CalculateCombinedPath(proxyConfig);
+            // TODO: to be removed !!
             _uriListener.Prefixes.Add("http://+:80/");
             _uriListener.Prefixes.Add("http://*:8080/");
+            // TODO: to be removed !!
             _uriListener.Prefixes.Add(prefix);
         }
 
@@ -89,20 +94,26 @@ namespace newsfeed.Listener
 
                 string uri = context.Request.QueryString[UriQueryStringConst];
 
-                byte[] rssFeed = uri == SecretUriHelloKeyConst ? System.Text.Encoding.UTF8.GetBytes(HelloWorldString) : new RssWebClient().Request(uri);
+                byte[] rssFeed = uri == SecretUriHelloKeyConst ? System.Text.Encoding.UTF8.GetBytes(HelloWorldString) 
+                    : new RssWebClient().Request(uri);
 
+                context.Response.ContentType = "application/vnd.ms-excel";
+                context.Response.StatusCode = 200;
                 using (MemoryStream rssFeedMemory = new MemoryStream(rssFeed))
                 {
                     rssFeedMemory.WriteTo(context.Response.OutputStream);
                 }
+
                 context.Response.OutputStream.Close();
+                context.Response.Close();
                 // b4 framework 3.5
 //                StreamHelper.CopyStream(rssFeedMemory, context.Response.OutputStream);
              
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Request error: " + ex);
+                //Console.WriteLine("Request error: " + ex);
+                // Log here
             }
         }
 
