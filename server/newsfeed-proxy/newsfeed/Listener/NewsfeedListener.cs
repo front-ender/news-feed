@@ -35,8 +35,8 @@ namespace newsfeed.Listener
             _uriListener = new HttpListener();
             string prefix = UriHelper.CalculateCombinedPath(proxyConfig);
             // TODO: to be removed !!
-            _uriListener.Prefixes.Add("http://+:80/");
-            _uriListener.Prefixes.Add("http://*:8080/");
+//            _uriListener.Prefixes.Add("http://+:80/");
+//            _uriListener.Prefixes.Add("http://*:8080/");
             // TODO: to be removed !!
             _uriListener.Prefixes.Add(prefix);
         }
@@ -99,6 +99,10 @@ namespace newsfeed.Listener
 
 //                context.Response.ContentType = "text/plain";
 //               context.Response.ContentType = "application/vnd.ms-excel";
+                // TODO: Consider removing to prevent cross-domain attacks
+                context.Response.AddHeader("Access-Control-Allow-Origin", "*");
+                // TODO: Consider removing to prevent cross-domain attacks
+
                 using (MemoryStream rssFeedMemory = new MemoryStream(rssFeed))
                 {
                     rssFeedMemory.WriteTo(context.Response.OutputStream);

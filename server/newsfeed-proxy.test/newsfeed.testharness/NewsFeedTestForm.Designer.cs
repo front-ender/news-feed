@@ -52,7 +52,7 @@
             this.tbxUri.Name = "tbxUri";
             this.tbxUri.Size = new System.Drawing.Size(218, 22);
             this.tbxUri.TabIndex = 1;
-            this.tbxUri.Text = "http://cetrea.dk/proxy/";
+            this.tbxUri.Text = "http://dev.cetrea.dk/proxy/";
             // 
             // tbxPort
             // 
@@ -60,7 +60,7 @@
             this.tbxPort.Name = "tbxPort";
             this.tbxPort.Size = new System.Drawing.Size(218, 22);
             this.tbxPort.TabIndex = 1;
-            this.tbxPort.Text = "8080";
+            this.tbxPort.Text = "80";
             // 
             // lblUri
             // 

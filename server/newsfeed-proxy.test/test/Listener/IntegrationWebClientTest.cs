@@ -15,8 +15,8 @@ namespace newsfeed.test.Listener
         // Need to add these to hosts file in C:\Windows\System32\drivers\etc\hosts
         // 127.0.0.1 	cetrea.dk
 
-        private const string CetreaUrl = "http://cetrea.dk";
-        private const string CetreaPort80Url = "http://cetrea.dk:80";
+        private const string CetreaUrl = "http://dev.cetrea.dk";
+        private const string CetreaPort80Url = "http://dev.cetrea.dk:80";
 
         /// <summary>
         /// Stop listener to make this test succeed

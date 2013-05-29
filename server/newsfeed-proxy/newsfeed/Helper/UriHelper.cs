@@ -22,7 +22,7 @@ namespace newsfeed.Helper
             if (!string.IsNullOrEmpty(proxyConfig.Uri))
             {
                 Uri uri = new Uri(proxyConfig.Uri);
-                uriPortCombined = portNumber != 0 ? SetPort(uri, portNumber).AbsoluteUri : proxyConfig.Uri;
+                uriPortCombined = portNumber != 0 ? SetPort(uri, portNumber).OriginalString : proxyConfig.Uri;
             }
             else if (!string.IsNullOrEmpty(proxyConfig.PortNumber))
             {
