@@ -1,10 +1,24 @@
-#top-a_wrapper{background-image:linear-gradient(left, #28447B, #294D95, #28447B);background-image:-o-linear-gradient(left, #28447B, #294D95, #28447B);background-image:-moz-linear-gradient(left, #28447B, #294D95, #28447B);background-image:-webkit-linear-gradient(left, #28447B, #294D95, #28447B);background-image:-ms-linear-gradient(left, #28447B, #294D95, #28447B);color:#3260ba}
+#top-a_wrapper{
+background-image:linear-gradient(left, #28447B, #294D95, #28447B);
+background-image:-o-linear-gradient(left, #28447B, #294D95, #28447B);
+background-image:-moz-linear-gradient(left, #28447B, #294D95, #28447B);
+background-image:-webkit-linear-gradient(left, #28447B, #294D95, #28447B);
+background-image:-ms-linear-gradient(left, #28447B, #294D95, #28447B);
+color:#3260ba
+}
 
-#top-a_wrapper h1
-{
+#top-a_wrapper h1{
 color: #FFF;
 font-size: 36px;
 line-height: 1.4;
 display:block;
 text-align:center;
+height:80px;
+}
+
+#top-a_wrapper img{
+position:absolute;
+top:8px;
+right:5px;
+height:80px;	
 }
