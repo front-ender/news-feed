@@ -1,5 +1,5 @@
 $(document).ready(function (){
-$('#btnOk').click(function(){	
+$('.btnsubmit input').click(function(){	
 	$('#newsfeed').each(function(){
 		var $container = $(this);
 		$container.empty();

@@ -1,11 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>rss feed</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <style type="text/css" media="screen">@import "css/common.css"; @import "css/cetrea.css";</style>
-
+<style type="text/css" media="screen">@import "css/newsfeed.css"</style>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
 <script type="text/javascript" src="scripts/rssfeed.js"></script>
@@ -26,10 +27,11 @@
 </div>
 <br/>
 
-<div>
-	<p>Enter a news feed url here:</p>
-	<input id ="urlfeed" type="text" value="http://dev.cetrea.dk/proxy/?uri=hello"/>
-	<input id ="btnOk" type="button"/>
+<div id="feed" style="position:relative; float:left; width:100%">
+	
+	<p>Enter an atom xml newsfeed url here and click the image</p>
+	<div style="width:80%"><input id ="urlfeed" type="text" value="http://dev.cetrea.dk/proxy/?uri=hello"/></div>	
+	<div class="btnsubmit"><INPUT type="submit" alt="Click here" text="" value=""></div>	
 	<h3>Recent news</h3>
 	<div id="newsfeed"> 
 		<a href="google.com">News release</a>

@@ -1,0 +1,20 @@
+
+div.btnsubmit input {
+	background:url(../images/feedme.jpg) no-repeat;
+	background-position: 20px 0;
+	cursor:pointer;
+	width: 250px;
+	height: 220px;
+	border: single;
+}
+
+div.btnsubmit input:hover{
+	background:url(../images/clickhere.jpg) no-repeat;
+	text-indent: -99999px;
+	background-position: -15px 5px;
+	}
+
+#feed{
+position:relative;
+float:left;
+}
