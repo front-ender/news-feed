@@ -14,11 +14,12 @@ line-height: 1.4;
 display:block;
 text-align:center;
 height:80px;
+padding-top: 30px;
 }
 
 #top-a_wrapper img{
 position:absolute;
 top:8px;
 /*right:5px*/;
-height:80px;	
+height:110px;	
 }

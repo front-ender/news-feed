@@ -1,4 +1,12 @@
 
+.urlinput{
+	width:100%;
+	}
+
+.urlinput:hover{
+	border:double;
+	}
+
 div.btnsubmit input {
 	background:url(../images/feedme.jpg) no-repeat;
 	background-position: 20px 0;
@@ -12,9 +20,25 @@ div.btnsubmit input:hover{
 	background:url(../images/clickhere.jpg) no-repeat;
 	text-indent: -99999px;
 	background-position: -15px 5px;
-	}
+	border: double;
+}
 
 #feed{
 position:relative;
 float:left;
+}
+
+input{
+	font-family:"Times New Roman", Times, serif;
+	font-size:20px;
+	}
+
+h3{
+	font-size:30px;
+	color:red;
+}
+
+#newsfeedresult h4{
+	font-size:20px;
+	color:blue;
 }

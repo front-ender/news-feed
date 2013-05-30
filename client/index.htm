@@ -28,12 +28,18 @@
 <br/>
 
 <div id="feed" style="position:relative; float:left; width:100%">
+
+	<p>Change proxy server reference here:</p>	
+	<div style="width:80%"><input id="urlProxy" class="urlinput" type="text" value="http://dev.cetrea.dk/proxy/"/></div>	
+	<br>	
 	
-	<p>Enter an atom xml newsfeed url here and click the image</p>
-	<div style="width:80%"><input id ="urlfeed" type="text" value="http://dev.cetrea.dk/proxy/?uri=hello"/></div>	
-	<div class="btnsubmit"><INPUT type="submit" alt="Click here" text="" value=""></div>	
+	<p>Enter an <i>atom xml</i> newsfeed url here and <b>click</b> the image:</p>
+	
+	<div style="width:80%"><input id="queryStringUrl" class="urlinput" type="text" value="http://feeds.bbci.co.uk/news/health/rss.xml?edition=uk"/></div>
+	<br>	
+	<div class="btnsubmit"><INPUT type="submit" alt="Click here" value=""></div>	
 	<h3>Recent news</h3>
-	<div id="newsfeed"> 
+	<div id="newsfeedresult"> 
 		<a href="google.com">News release</a>
 	</div>
 	
