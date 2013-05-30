@@ -11,6 +11,7 @@ $('.btnsubmit input').click(function(){
 		
 		$.get(feedUrl, function(data) {
 		    var $xml = $(data);
+		    var count=0;
 		    
 		    try{
 			    var $items = $xml.find('item');
@@ -18,19 +19,50 @@ $('.btnsubmit input').click(function(){
 			    $items.each(function(){
 			       	try
 			       	{
-				    	var $headline = $('<h4>Headline here..</h4>').append($('title', this).text());
-				    	var $description = $('<p>Headline here..</p>').append($('description', this).text());
+			       		count++;
+			       		if(count>10)
+			       		{
+			       			return;
+			       		}
+			       			
+				    	var $headline = $('<h4></h4>')
+				    	.append(count+')&nbsp;')
+				    	.append($('pubdate', this).text())
+				    	.append(':')
+				    	.append()
+				    	.append('<b>'+$('title', this).text()+'</b>');
+				    	var $description = $('<p>Story:</p>').append($('description', this).text());
 				    	var $textlink = $('<a></a>')
-				    		.attr('href', $('link', this).text())
-			    			.text($('title', 'story link'));
-//				    	var $img1 = $('<img></img>')
-//			    		.attr('src', $('media:thumbnail', this).firstchild.('url').text())
-//		    			.text($('title', 'image'));
-						$('<div></div>')
+				    		.attr('href', $('guid', this).text())
+			    			.text($('title', this).text());
+						try{
+					    	var $img1 = $('<img></img>')
+				    		.attr('src', this.childNodes[11].attributes['url'].value)
+				    		.addClass('thumbnail')
+			    			.text('');
+						}
+						catch(exception){
+							console.log(exception);
+						}
+						try{
+					    	var $img2 = $('<img></img>')
+				    		.attr('src', this.childNodes[13].attributes['url'].value)
+				    		.addClass('fullsize')
+			    			.text('');
+						}
+						catch(exception){
+							console.log(exception);							
+						}
+
+
+				    	$('<div></div>')
+							.append($img1)
+							.append('&nbsp;&nbsp;&nbsp;')
 							.append($headline)
 							.append($description)
 							.append($textlink)
-	//						.append($img1)
+							.append($img2)
+							.append('<p><br></p>')
 							.appendTo($container);
 			       	}
 			       	catch(exception){

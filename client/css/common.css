@@ -1,6 +1,9 @@
 /* ----- general ----- */
 
 body {
+  padding-left:10px;
+  padding-right:10px;
+  
   background: white;
   color: black;
   font-size: 100%;
