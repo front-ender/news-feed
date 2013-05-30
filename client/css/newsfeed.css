@@ -38,7 +38,40 @@ h3{
 	color:red;
 }
 
+#newsfeedresult div{
+	position:relative;
+	float:left;
+	width:80%;
+	border-bottom: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+}
+
 #newsfeedresult h4{
+	display: inline-block;	
+	float:clear;	
 	font-size:20px;
 	color:blue;
 }
+
+#newsfeedresult a{
+	display: inline-block;	
+	font-size:40px;
+}
+
+#newsfeedresult a:hover{
+	color:purple;
+}
+
+
+.thumbnail{
+	display: inline-block;	
+	float:left;	
+	width:100px;
+}
+
+.fullsize{
+	float:right;
+	width:400px;
+}
+
+
